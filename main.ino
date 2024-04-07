@@ -11,13 +11,9 @@
 
 int currentState = LOW;
 
-
-SoftwareSerial serialBluetooth(PINO_RX_BT, PINO_TX_BT);
-
 void setup() {
 
   Serial.begin(9600);
-  serialBluetooth.begin(9600);
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
@@ -30,19 +26,17 @@ void setup() {
 }
 
 void loop() {
-  if (serialBluetooth.available()) {
+  if (Serial.available()) {
 
-    String stringPID = serialBluetooth.readStringUntil('\n');
+    String stringPID = Serial.readStringUntil('\n');
 
-D
+
     analisarStringPID(stringPID);
   }
 
-
-  float saidaPID = calcularPID();
+  int valorSensor = analogRead(PINO_SENSOR_IR);
+  float saidaPID = calcularPID(valorSensor);
 
   moverMotores(saidaPID);
 
 }
-
-

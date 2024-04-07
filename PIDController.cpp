@@ -1,14 +1,19 @@
 #include "PIDController.h"
 
+float erroAnterior = 0.0;
+float integral = 0.0;
+float kp = DEFAULT_KP;
+float ki = DEFAULT_KI;
+float kd = DEFAULT_KD;
+int referencia_linha = 0;
+
 void updatePID(float new_kp, float new_ki, float new_kd) {
   kp = new_kp;
   ki = new_ki;
   kd = new_kd;
 }
 
-float calcularPID() {
-
-  int valorSensor = analogRead(PINO_SENSOR_IR);
+float calcularPID(int valorSensor) {
 
   float erro = valorSensor - referencia_linha;
 
@@ -47,4 +52,3 @@ void analisarStringPID(String stringPID) {
     updatePID(novoKp, novoKi, novoKd);
   }
 }
-
